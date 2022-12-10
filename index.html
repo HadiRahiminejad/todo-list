@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            margin: 0;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            height: auto;
+        }
+        *, *:before, *:after {
+            box-sizing: border-box;
+            }
+        #todo-list {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-direction: column;
+            padding-top: 10%;
+            
+        }
+        input {
+            border: none;
+            background: hsl(0 0% 93%);
+            border-radius: 0.25rem;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 0.75rem 0.5rem -0.5rem hsl(0deg 50% 90%);
+        }
+        button {
+            background: rgb(231, 14, 122);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0.75rem 0.5rem -0.5rem hsl(0deg 50% 80%);
+            border: none;
+            border-radius: 0.25rem;
+            padding: 15px 30px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+       span {
+            content: url('delete-svgrepo-com.svg');
+            width: 14px;
+            height: 14px;
+            margin-left: 25px;
+            transform: rotate(45deg);
+        }
+       span:hover {
+        transform: rotate(360deg);
+        transition: 1s all ease;
+       }
+        ul li{
+            width: 320px;
+            padding:12px 0px;
+            margin-right: 5px;
+            cursor: pointer;
+            list-style-type: none;
+            transition: 0.2s;
+            position: relative;
+            border-bottom: 1px solid  rgb(54, 49, 49);
+       }
+       ul li.close {
+            text-decoration: line-through;
+        }
+       ul li.close::before {
+           content: '';
+            position: absolute;
+            border-color:#000;
+            border-style: solid;
+            border-width: 0 3px 3px 0;
+            top: 13px;
+            left: -30px;
+            transform: rotate(45deg);
+            height: 15px;
+            width: 7px;
+        }
+        .date {
+            font-size: 0.01px;
+            font-weight: 1;
+            color: rgb(237, 102, 217);
+        }
+        #footer {
+            background:  hsl(0 0% 93%);
+            text-align: center;
+            margin-top: 100%;
+            padding: 25px;
+            color: rgb(50, 25, 25);
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="todo-list">
+        <h1>TODO LIST</h1>
+        <div id="input-btn">
+            <input type="text" id="input" placeholder="Please enter a task ">
+            <button id="btn-add">add</button>
+        </div>
+            <ul id="ul">
+            </ul>
+    </div>
+    <div id="footer">Version 0.0.1</div>
+    <script>
+        var lst = document.getElementById('ul');
+        var btnAddElement = document.getElementById('btn-add');
+        var inputTextElement = document.getElementById('input');
+        lst.addEventListener('click', function(event) {
+        if (event.target.tagName === 'LI') {
+            event.target.classList.toggle('close');
+        }
+        });
+
+      function addTask() {
+        var inputTextElement = document.getElementById('input');
+        var ulElement = document.getElementById('ul');
+        var liElement = document.createElement('li');
+        // liElement.classList()
+        var spanElement = document.createElement('span');
+        var setDate = document.createElement('p');
+        setDate.classList.add('date');
+        const d = new Date();
+        let text = d.toDateString();
+        setDate.innerHTML = text;
+        
+        if(inputTextElement.value.length > 3) {
+            liElement.innerHTML = inputTextElement.value;
+            liElement.appendChild(spanElement);
+            liElement.appendChild(setDate);
+            ulElement.appendChild(liElement);
+            inputTextElement.value = '';
+        } else {
+            alert('Please enter at least 4 characters')
+        }
+        spanElement.addEventListener('click',function deleteBtn(){
+            liElement.remove();
+        });
+      };
+
+      btnAddElement.addEventListener('click', addTask);
+      inputTextElement.addEventListener('keypress', (event) => {
+        if(event.which === 13) {
+           addTask();
+        }
+      })
+
+    </script>
+</body>
+</html>
